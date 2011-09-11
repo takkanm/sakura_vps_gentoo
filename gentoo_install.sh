@@ -2,11 +2,11 @@
 
 GENTOO_DIR='/mnt/gentoo'
 IMG_DIR='/mnt/cdrom'
-ETH='eth0'
+export ETH='eth0'
 GENTOO_DEV_NUM='3'
 GENTOO_DEV="/dev/hda${GENTOO_DEV_NUM}"
 SYSRESC_CD=${1}
-GRUB_CONF="/boot/grug/grub.conf"
+GRUB_CONF="/boot/grub/grub.conf"
 KMAP="us"
 NETWORK_SCRIPT="network_start.sh"
 SYSRCD_DIR="sysrcd"
@@ -32,11 +32,13 @@ EOF
 mkfs.ext3 ${GENTOO_DEV}
 
 mkdir -p ${GENTOO_DIR}
+umount ${GENTOO_DIR}
 mount ${GENTOO_DEV} ${GENTOO_DIR}
 mkdir ${GENTOO_DIR}/${SYSRCD_DIR}
 
 # mount SystemRescueCd
 mkdir -p ${IMG_DIR}
+umount ${IMG_DIR}
 mount -o loop ${SYSRESC_CD} ${IMG_DIR}
 
 # create network start script
