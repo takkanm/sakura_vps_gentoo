@@ -26,7 +26,7 @@ route_cmd()
 
 # create gentoo mount dir
 swapoff ${GENTOO_DEV}
-fdisk /dev/hda <<EOF
+fdisk /dev/hda <<"EOF"
 t
 #{GENTOO_DEV_NUM}
 p
