@@ -2,7 +2,7 @@
 
 GENTOO_DIR='/mnt/gentoo'
 IMG_DIR='/mnt/cdrom'
-export ETH='eth0'
+# export ETH='eth0'
 GENTOO_DEV_NUM='3'
 GENTOO_DEV="/dev/hda${GENTOO_DEV_NUM}"
 SYSRESC_CD=${1}
@@ -13,12 +13,12 @@ SYSRCD_DIR="sysrcd"
 
 ifup_cmd()
 {
-	ifconfig ${ETH} | grep 'inet ' | awk -F'[:| ]' '{print "ifconfig " ENVIRON["ETH"] " " $4 " broadcast " $7 " netmask " $10 " up" }'
+	ifconfig eth0 | grep 'inet ' | awk -F'[:| ]' '{print "ifconfig " eth0 " " $4 " broadcast " $7 " netmask " $10 " up" }'
 }
 
 route_cmd()
 {
-	route | grep default | grep ${ETH} | awk '{print "route add default gw " $2}'
+	route | grep default | grep eth0 | awk '{print "route add default gw " $2}'
 }
 
 # create gentoo mount dir
@@ -54,7 +54,7 @@ cp ${IMG_DIR}/**/rescue* ${GENTOO_DIR}/${SYSRCD_DIR}
 cp ${IMG_DIR}/**/altker* ${GENTOO_DIR}/${SYSRCD_DIR}
 
 # edit grub.conf
-echo <<EOF >> ${GRUB_CONF}
+echo >> ${GRUB_CONF} <<EOF
 
 title SystemRescueCd
 root (hd0,2)
