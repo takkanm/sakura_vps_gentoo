@@ -13,7 +13,10 @@ SYSRCD_DIR="sysrcd"
 
 ifup_cmd()
 {
-	ifconfig eth0 | grep 'inet ' | awk -F'[:| ]' '{print "ifconfig " eth0 " " $4 " broadcast " $7 " netmask " $10 " up" }'
+	INET_ADDR=`ifconfig eth0 | grep 'inet ' | gawk -F':' '{print $2}' | awk '{print $1}'`
+	BCAST=`ifconfig eth0 | grep 'inet ' | gawk -F':' '{print $3}' | awk '{print $1}'`
+	MASK=`ifconfig eth0 | grep 'inet ' | gawk -F':' '{print $4}' | awk '{print $1}'`
+	echo "ifconfig eth0 ${INET_ADDR} broadcast ${BCAST} netmask ${MASK} up"
 }
 
 route_cmd()
@@ -23,7 +26,7 @@ route_cmd()
 
 # create gentoo mount dir
 swapoff ${GENTOO_DEV}
-fdisk ${GENTOO_DEV} <<EOF
+fdisk /dev/hda <<EOF
 t
 #{GENTOO_DEV_NUM}
 p
