@@ -57,10 +57,8 @@ cp ${IMG_DIR}/**/rescue* ${GENTOO_DIR}/${SYSRCD_DIR}
 cp ${IMG_DIR}/**/altker* ${GENTOO_DIR}/${SYSRCD_DIR}
 
 # edit grub.conf
-echo >> ${GRUB_CONF} <<EOF
-
-title SystemRescueCd
-root (hd0,2)
-kernel /${SYSRCD_DIR}/rescue64 subdir=sysrcd setkmap=${KMAP} console=tty0 console=ttyS0,115200n8r
-initrd /${SYSRCD_DIR}/initram.igz
-EOF
+echo '' >> ${GRUB_CONF}
+echo 'title SystemRescueCd' >> ${GRUB_CONF}
+echo "root (hd0,2)" >> ${GRUB_CONF}
+echo "kernel /${SYSRCD_DIR}/rescue64 subdir=sysrcd setkmap=${KMAP} console=tty0 console=ttyS0,115200n8r" >> ${GRUB_CONF}
+echo "initrd /${SYSRCD_DIR}/initram.igz" >> ${GRUB_CONF}
